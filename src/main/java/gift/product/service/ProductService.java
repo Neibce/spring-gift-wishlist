@@ -37,7 +37,7 @@ public class ProductService {
                 .orElseThrow(() -> new EntityNotFoundException(PRODUCT_NOT_FOUND_MESSAGE));
         product.update(requestDto);
         productRepository.update(product);
-        return getProduct(id);
+        return getProductById(id);
     }
 
     public void checkRestrictedWords(String name) {
@@ -48,7 +48,7 @@ public class ProductService {
 
     @Transactional
     public void deleteProduct(Long id) {
-        getProduct(id);
+        getProductById(id);
         productRepository.delete(id);
     }
 
@@ -58,7 +58,7 @@ public class ProductService {
                 .toList();
     }
 
-    public ProductItemDto getProduct(Long id) {
+    public ProductItemDto getProductById(Long id) {
         return new ProductItemDto(
                 productRepository.findById(id)
                         .orElseThrow(() -> new EntityNotFoundException(PRODUCT_NOT_FOUND_MESSAGE)));
