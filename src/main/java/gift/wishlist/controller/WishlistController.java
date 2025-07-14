@@ -34,7 +34,7 @@ public class WishlistController {
         return ResponseEntity.ok(wishlistItems);
     }
 
-    @PutMapping("/{productId}")
+    @PutMapping("/products/{productId}")
     public ResponseEntity<WishlistItemDto> updateItem(
             @LoginMember Member member,
             @PathVariable Long productId,
@@ -43,7 +43,7 @@ public class WishlistController {
         return ResponseEntity.ok(updatedItem);
     }
 
-    @DeleteMapping("/{productId}")
+    @DeleteMapping("/products/{productId}")
     public ResponseEntity<Void> deleteItem(
             @LoginMember Member member,
             @PathVariable Long productId) {

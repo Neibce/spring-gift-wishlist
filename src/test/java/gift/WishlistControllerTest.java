@@ -89,7 +89,7 @@ public class WishlistControllerTest {
         assertThat(response.getBody()).isEmpty();
 
         var addRequest = new WishlistUpdateRequestDto(VALID_QUANTITY);
-        restTemplate.exchange(baseUrl + "/" + VALID_PRODUCT_ID, HttpMethod.PUT,
+        restTemplate.exchange(baseUrl + "/products/" + VALID_PRODUCT_ID, HttpMethod.PUT,
                 new HttpEntity<>(addRequest, headers), WishlistItemDto.class);
 
         var responseWithItem = restTemplate.exchange(
@@ -115,7 +115,7 @@ public class WishlistControllerTest {
         HttpEntity<WishlistUpdateRequestDto> entity = new HttpEntity<>(requestDto, headers);
 
         var response = restTemplate.exchange(
-                baseUrl + "/" + VALID_PRODUCT_ID,
+                baseUrl + "/products/" + VALID_PRODUCT_ID,
                 HttpMethod.PUT,
                 entity,
                 WishlistItemDto.class
@@ -136,7 +136,7 @@ public class WishlistControllerTest {
         var initialRequest = new WishlistUpdateRequestDto(VALID_QUANTITY);
         HttpEntity<WishlistUpdateRequestDto> initialEntity = new HttpEntity<>(initialRequest,
                 headers);
-        restTemplate.exchange(baseUrl + "/" + VALID_PRODUCT_ID, HttpMethod.PUT, initialEntity,
+        restTemplate.exchange(baseUrl + "/products/" + VALID_PRODUCT_ID, HttpMethod.PUT, initialEntity,
                 WishlistItemDto.class);
 
         int updatedQuantity = 5;
@@ -145,7 +145,7 @@ public class WishlistControllerTest {
                 headers);
 
         var response = restTemplate.exchange(
-                baseUrl + "/" + VALID_PRODUCT_ID,
+                baseUrl + "/products/" + VALID_PRODUCT_ID,
                 HttpMethod.PUT,
                 updateEntity,
                 WishlistItemDto.class
@@ -164,12 +164,12 @@ public class WishlistControllerTest {
 
         var addRequest = new WishlistUpdateRequestDto(VALID_QUANTITY);
         HttpEntity<WishlistUpdateRequestDto> addEntity = new HttpEntity<>(addRequest, headers);
-        restTemplate.exchange(baseUrl + "/" + VALID_PRODUCT_ID, HttpMethod.PUT, addEntity,
+        restTemplate.exchange(baseUrl + "/products/" + VALID_PRODUCT_ID, HttpMethod.PUT, addEntity,
                 WishlistItemDto.class);
 
         HttpEntity<Void> deleteEntity = new HttpEntity<>(headers);
         var response = restTemplate.exchange(
-                baseUrl + "/" + VALID_PRODUCT_ID,
+                baseUrl + "/products/" + VALID_PRODUCT_ID,
                 HttpMethod.DELETE,
                 deleteEntity,
                 Void.class
@@ -206,7 +206,7 @@ public class WishlistControllerTest {
         HttpEntity<WishlistUpdateRequestDto> entity = new HttpEntity<>(requestDto, headers);
 
         var response = restTemplate.exchange(
-                baseUrl + "/" + nonExistentProductId,
+                baseUrl + "/products/" + nonExistentProductId,
                 HttpMethod.PUT,
                 entity,
                 ErrorResponseDto.class
@@ -226,7 +226,7 @@ public class WishlistControllerTest {
         HttpEntity<WishlistUpdateRequestDto> entity = new HttpEntity<>(requestDto, headers);
 
         var response = restTemplate.exchange(
-                baseUrl + "/" + VALID_PRODUCT_ID,
+                baseUrl + "/products/" + VALID_PRODUCT_ID,
                 HttpMethod.PUT,
                 entity,
                 ErrorResponseDto.class
@@ -245,7 +245,7 @@ public class WishlistControllerTest {
         HttpEntity<Void> entity = new HttpEntity<>(headers);
 
         var response = restTemplate.exchange(
-                baseUrl + "/" + VALID_PRODUCT_ID,
+                baseUrl + "/products/" + VALID_PRODUCT_ID,
                 HttpMethod.DELETE,
                 entity,
                 ErrorResponseDto.class
