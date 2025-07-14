@@ -27,10 +27,10 @@ public class WishlistItem {
         this.product = product;
     }
 
-    public WishlistItem(UUID memberUuid, Long productId, WishlistUpdateRequestDto requestDto) {
+    public WishlistItem(UUID memberUuid, Long productId, int quantity) {
         this.memberUuid = memberUuid;
         this.productId = productId;
-        this.quantity = requestDto.quantity();
+        this.quantity = quantity;
     }
 
     public UUID getMemberUuid() {

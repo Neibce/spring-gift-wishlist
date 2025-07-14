@@ -29,7 +29,8 @@ public class WishlistService {
         if (!productService.existsById(productId)) {
             throw new EntityNotFoundException("존재하지 않는 상품입니다.");
         }
-        WishlistItem wishlistItem = new WishlistItem(member.getUuid(), productId, requestDto);
+        WishlistItem wishlistItem = new WishlistItem(
+                member.getUuid(), productId, requestDto.quantity());
         Long itemId = wishlistRepository.upsert(wishlistItem);
         return new WishlistItemDto(getById(itemId));
     }
