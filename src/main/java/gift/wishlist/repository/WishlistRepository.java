@@ -1,7 +1,8 @@
 package gift.wishlist.repository;
 
+import gift.wishlist.dto.WishlistItemDto;
 import gift.wishlist.entity.WishlistItem;
-import gift.wishlist.mapper.WishlistItemMapper;
+import gift.wishlist.mapper.WishlistItemDtoMapper;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -32,7 +33,7 @@ public class WishlistRepository {
         return (Long) Objects.requireNonNull(keyHolder.getKeys()).get("id");
     }
 
-    public Optional<WishlistItem> getById(Long id) {
+    public Optional<WishlistItemDto> getById(Long id) {
         return jdbcClient.sql("""
                         SELECT
                             w.member_uuid, w.product_id, w.quantity, w.added_at,
@@ -43,11 +44,11 @@ public class WishlistRepository {
                         ORDER BY w.added_at DESC
                         """)
                 .param(id)
-                .query(new WishlistItemMapper())
+                .query(new WishlistItemDtoMapper())
                 .optional();
     }
 
-    public List<WishlistItem> getByMemberUuidWithProduct(UUID memberUuid) {
+    public List<WishlistItemDto> getByMemberUuidWithProduct(UUID memberUuid) {
         return jdbcClient.sql("""
                         SELECT
                             w.member_uuid, w.product_id, w.quantity, w.added_at,
@@ -58,7 +59,7 @@ public class WishlistRepository {
                         ORDER BY w.added_at DESC
                         """)
                 .param(memberUuid)
-                .query(new WishlistItemMapper())
+                .query(new WishlistItemDtoMapper())
                 .list();
     }
 

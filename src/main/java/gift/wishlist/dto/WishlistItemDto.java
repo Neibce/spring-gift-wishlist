@@ -10,9 +10,4 @@ public record WishlistItemDto(
         LocalDateTime addedAt
 ) {
 
-    public WishlistItemDto(WishlistItem wishlistItem) {
-        this(new ProductItemDto(wishlistItem.getProduct()),
-                wishlistItem.getQuantity(), wishlistItem.getAddedAt());
-    }
-
 }

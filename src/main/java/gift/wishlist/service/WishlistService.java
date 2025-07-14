@@ -32,15 +32,11 @@ public class WishlistService {
         WishlistItem wishlistItem = new WishlistItem(
                 member.getUuid(), productId, requestDto.quantity());
         Long itemId = wishlistRepository.upsert(wishlistItem);
-        return new WishlistItemDto(getById(itemId));
+        return getWishlistItemDtoById(itemId);
     }
 
     public List<WishlistItemDto> getWishlistItems(Member member) {
-        List<WishlistItem> wishlistItems = wishlistRepository.getByMemberUuidWithProduct(
-                member.getUuid());
-        return wishlistItems.stream()
-                .map(WishlistItemDto::new)
-                .toList();
+        return wishlistRepository.getByMemberUuidWithProduct(member.getUuid());
     }
 
     @Transactional
@@ -52,7 +48,7 @@ public class WishlistService {
         wishlistRepository.deleteByMemberUuidAndProductId(member.getUuid(), productId);
     }
 
-    public WishlistItem getById(Long id) throws EntityNotFoundException {
+    public WishlistItemDto getWishlistItemDtoById(Long id) throws EntityNotFoundException {
         return wishlistRepository.getById(id).orElseThrow(() ->
                 new EntityNotFoundException("위시리스트 항목을 조회할 수 없습니다."));
     }

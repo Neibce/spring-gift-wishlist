@@ -12,19 +12,16 @@ public class WishlistItem {
     private Long productId;
     private int quantity;
     private LocalDateTime addedAt;
-    private Product product;
 
     public WishlistItem() {
 
     }
 
-    public WishlistItem(UUID memberUuid, Long productId, int quantity,
-            LocalDateTime addedAt, Product product) {
+    public WishlistItem(UUID memberUuid, Long productId, int quantity, LocalDateTime addedAt) {
         this.memberUuid = memberUuid;
         this.productId = productId;
         this.quantity = quantity;
         this.addedAt = addedAt;
-        this.product = product;
     }
 
     public WishlistItem(UUID memberUuid, Long productId, int quantity) {
@@ -39,10 +36,6 @@ public class WishlistItem {
 
     public Long getProductId() {
         return productId;
-    }
-
-    public Product getProduct() {
-        return product;
     }
 
     public int getQuantity() {
