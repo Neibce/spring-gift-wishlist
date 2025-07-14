@@ -28,26 +28,26 @@ public class WishlistController {
     }
 
     @GetMapping
-    public ResponseEntity<List<WishlistItemDto>> getItems(
+    public ResponseEntity<List<WishlistItemDto>> getWishlistItems(
             @LoginMember Member member) {
-        var wishlistItems = wishlistService.getItems(member);
+        var wishlistItems = wishlistService.getWishlistItems(member);
         return ResponseEntity.ok(wishlistItems);
     }
 
     @PutMapping("/products/{productId}")
-    public ResponseEntity<WishlistItemDto> updateItem(
+    public ResponseEntity<WishlistItemDto> upsertWishlistItem(
             @LoginMember Member member,
             @PathVariable Long productId,
             @Valid @RequestBody WishlistUpdateRequestDto requestDto) {
-        var updatedItem = wishlistService.updateItem(member, productId, requestDto);
+        var updatedItem = wishlistService.upsertWishlistItem(member, productId, requestDto);
         return ResponseEntity.ok(updatedItem);
     }
 
     @DeleteMapping("/products/{productId}")
-    public ResponseEntity<Void> deleteItem(
+    public ResponseEntity<Void> deleteWishlistItem(
             @LoginMember Member member,
             @PathVariable Long productId) {
-        wishlistService.deleteItem(member, productId);
+        wishlistService.deleteWishlistItem(member, productId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

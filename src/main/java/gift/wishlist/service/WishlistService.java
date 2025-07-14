@@ -24,7 +24,7 @@ public class WishlistService {
     }
 
     @Transactional
-    public WishlistItemDto updateItem(Member member, Long productId,
+    public WishlistItemDto upsertWishlistItem(Member member, Long productId,
             WishlistUpdateRequestDto requestDto) {
         if (!productService.existsById(productId)) {
             throw new EntityNotFoundException("존재하지 않는 상품입니다.");
@@ -34,7 +34,7 @@ public class WishlistService {
         return new WishlistItemDto(getById(itemId));
     }
 
-    public List<WishlistItemDto> getItems(Member member) {
+    public List<WishlistItemDto> getWishlistItems(Member member) {
         List<WishlistItem> wishlistItems = wishlistRepository.getByMemberUuidWithProduct(
                 member.getUuid());
         return wishlistItems.stream()
@@ -43,7 +43,7 @@ public class WishlistService {
     }
 
     @Transactional
-    public void deleteItem(Member member, Long productId) {
+    public void deleteWishlistItem(Member member, Long productId) {
         if (!wishlistRepository.existsByMemberUuidAndProductId(member.getUuid(), productId)) {
             throw new EntityNotFoundException("위시리스트 항목을 찾을 수 없습니다.");
         }
