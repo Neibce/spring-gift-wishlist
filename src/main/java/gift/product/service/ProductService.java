@@ -63,4 +63,8 @@ public class ProductService {
                 productRepository.findById(id)
                         .orElseThrow(() -> new EntityNotFoundException(PRODUCT_NOT_FOUND_MESSAGE)));
     }
+
+    public boolean existsById(Long id) {
+        return productRepository.existsById(id);
+    }
 }

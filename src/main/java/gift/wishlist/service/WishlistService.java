@@ -2,12 +2,12 @@ package gift.wishlist.service;
 
 import gift.exception.EntityNotFoundException;
 import gift.member.entity.Member;
+import gift.product.service.ProductService;
 import gift.wishlist.dto.WishlistItemDto;
 import gift.wishlist.dto.WishlistUpdateRequestDto;
 import gift.wishlist.entity.WishlistItem;
 import gift.wishlist.repository.WishlistRepository;
 import java.util.List;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,22 +15,23 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class WishlistService {
 
-    WishlistRepository wishlistRepository;
+    private final WishlistRepository wishlistRepository;
+    private final ProductService productService;
 
-    public WishlistService(WishlistRepository wishlistRepository) {
+    public WishlistService(WishlistRepository wishlistRepository, ProductService productService) {
         this.wishlistRepository = wishlistRepository;
+        this.productService = productService;
     }
 
     @Transactional
     public WishlistItemDto updateItem(Member member, Long productId,
             WishlistUpdateRequestDto requestDto) {
-        try {
-            WishlistItem wishlistItem = new WishlistItem(member.getUuid(), productId, requestDto);
-            Long itemId = wishlistRepository.upsert(wishlistItem);
-            return new WishlistItemDto(getById(itemId));
-        } catch (DataIntegrityViolationException e) {
+        if (!productService.existsById(productId)) {
             throw new EntityNotFoundException("존재하지 않는 상품입니다.");
         }
+        WishlistItem wishlistItem = new WishlistItem(member.getUuid(), productId, requestDto);
+        Long itemId = wishlistRepository.upsert(wishlistItem);
+        return new WishlistItemDto(getById(itemId));
     }
 
     public List<WishlistItemDto> getItems(Member member) {
