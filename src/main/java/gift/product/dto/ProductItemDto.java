@@ -3,14 +3,14 @@ package gift.product.dto;
 
 import gift.product.entity.Product;
 
-public record ProductResponseDto(
+public record ProductItemDto(
         Long id,
         String name,
         Long price,
         String imageUrl
 ) {
 
-    public ProductResponseDto(Product product) {
+    public ProductItemDto(Product product) {
         this(product.getId(), product.getName(), product.getPrice(), product.getImageUrl());
     }
 }

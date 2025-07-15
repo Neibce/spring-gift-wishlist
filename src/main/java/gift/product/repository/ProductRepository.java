@@ -53,4 +53,11 @@ public class ProductRepository {
     public void delete(Long id) {
         jdbcClient.sql("DELETE FROM product WHERE id=?").param(id).update();
     }
+
+    public boolean existsById(Long id) {
+        return jdbcClient.sql("SELECT EXISTS(SELECT 1 FROM product WHERE id = ?)")
+                .param(id)
+                .query(Boolean.class)
+                .single();
+    }
 }

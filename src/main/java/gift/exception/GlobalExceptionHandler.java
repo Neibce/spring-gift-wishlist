@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponseDto> handleProductNotFound(
             EntityNotFoundException exception) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(new ErrorResponseDto(ErrorStatus.NOT_FOUND.getCode(),
+                .body(new ErrorResponseDto(ErrorStatus.ENTITY_NOT_FOUND.getCode(),
                         exception.getMessage()));
     }
 

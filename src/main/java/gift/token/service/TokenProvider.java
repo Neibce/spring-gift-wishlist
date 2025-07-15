@@ -5,7 +5,9 @@ import gift.member.entity.Member;
 import gift.token.entity.RefreshToken;
 import gift.token.repository.RefreshTokenRepository;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.Duration;
@@ -77,18 +79,17 @@ public class TokenProvider {
     }
 
     private Claims getClaimsFromToken(String accessToken) throws InvalidCredentialsException {
-        Claims claims = Jwts.parser()
-                .verifyWith(getSigningKey())
-                .build()
-                .parseSignedClaims(accessToken)
-                .getPayload();
-
-        Date expirationDate = claims.getExpiration();
-        if (expirationDate.before(new Date())) {
-            throw new InvalidCredentialsException("Invalid access token");
+        try {
+            return Jwts.parser()
+                    .verifyWith(getSigningKey())
+                    .build()
+                    .parseSignedClaims(accessToken)
+                    .getPayload();
+        } catch (ExpiredJwtException e) {
+            throw new InvalidCredentialsException("Expired access token");
+        } catch (MalformedJwtException e){
+            throw new InvalidCredentialsException("Malformed access token");
         }
-
-        return claims;
     }
 
     private SecretKey getSigningKey() {

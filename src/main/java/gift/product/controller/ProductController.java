@@ -1,7 +1,7 @@
 package gift.product.controller;
 
 import gift.product.dto.ProductCreateRequestDto;
-import gift.product.dto.ProductResponseDto;
+import gift.product.dto.ProductItemDto;
 import gift.product.dto.ProductUpdateRequestDto;
 import gift.product.service.ProductService;
 import jakarta.validation.Valid;
@@ -21,13 +21,13 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductResponseDto> createProduct(@Valid @RequestBody ProductCreateRequestDto product) {
+    public ResponseEntity<ProductItemDto> createProduct(@Valid @RequestBody ProductCreateRequestDto product) {
         var createdProduct = productService.createProduct(product);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<ProductResponseDto> updateProduct(@PathVariable Long id,
+    public ResponseEntity<ProductItemDto> updateProduct(@PathVariable Long id,
                                               @Valid @RequestBody ProductUpdateRequestDto product) {
         var updatedProduct = productService.updateProduct(id, product);
         return ResponseEntity.status(HttpStatus.OK).body(updatedProduct);
@@ -41,14 +41,14 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductResponseDto>> getProducts() {
+    public ResponseEntity<List<ProductItemDto>> getProducts() {
         var products = productService.getProducts();
         return ResponseEntity.status(HttpStatus.OK).body(products);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<ProductResponseDto> getProduct(@PathVariable Long id) {
-        var product = productService.getProduct(id);
+    public ResponseEntity<ProductItemDto> getProduct(@PathVariable Long id) {
+        var product = productService.getProductById(id);
         return ResponseEntity.status(HttpStatus.OK).body(product);
     }
 }

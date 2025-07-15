@@ -27,3 +27,20 @@
 4. 회원가입 기능을 구현한다.
 5. 로그인 기능을 구현한다.
 6. Refresh Token을 이용한 Access Token 재발급 기능을 구현한다.
+
+## 3단계 - 상품 위시리스트
+
+### 구현할 기능 목록
+
+1. wishlist_item 테이블을 생성한다. (schema.sql)
+2. LoginMemberArgumentResolver를 구현한다.
+3. WishlistItem 엔티티를 생성한다.
+4. WishlistRepository를 구현한다.
+5. WishlistService를 구현한다.
+   - 위시리스트 아이템 추가/수정 기능
+   - 위시리스트 조회 기능
+   - 위시리스트 아이템 삭제 기능
+6. WishlistController를 구현한다.
+   - GET /api/wishlist - 로그인한 회원의 위시리스트 조회
+   - PUT /api/wishlist/{productId} - 위시리스트 아이템 추가/수정
+   - DELETE /api/wishlist/{productId} - 위시리스트 아이템 삭제
