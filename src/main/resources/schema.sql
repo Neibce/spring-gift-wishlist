@@ -37,4 +37,4 @@ CREATE TABLE wishlist_item
     FOREIGN KEY (product_id) REFERENCES product (id) ON DELETE SET NULL,
     UNIQUE (member_uuid, product_id)
 );
-//FOREIGN KEY (product_id) REFERENCES product (id) ON DELETE CASCADE,
+--FOREIGN KEY (product_id) REFERENCES product (id) ON DELETE CASCADE,
