@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import gift.product.dto.ProductCreateRequestDto;
-import gift.product.dto.ProductResponseDto;
+import gift.product.dto.ProductItemDto;
 import gift.product.dto.ProductUpdateRequestDto;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,9 +13,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
 
+@Transactional
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ProductControllerTest {
 
@@ -34,12 +36,12 @@ public class ProductControllerTest {
         baseUrl = "http://localhost:" + port + "/api/products";
     }
 
-    private ResponseEntity<ProductResponseDto> postProductCreateRequest(ProductCreateRequestDto requestDto) {
+    private ResponseEntity<ProductItemDto> postProductCreateRequest(ProductCreateRequestDto requestDto) {
         return restClient.post()
                 .uri(baseUrl)
                 .body(requestDto)
                 .retrieve()
-                .toEntity(ProductResponseDto.class);
+                .toEntity(ProductItemDto.class);
     }
 
     @Test
@@ -77,7 +79,7 @@ public class ProductControllerTest {
 
         var getResponse = restClient.get().uri(baseUrl + "/" + createResponse.getBody().id())
                 .retrieve()
-                .toEntity(ProductResponseDto.class);
+                .toEntity(ProductItemDto.class);
 
         assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(getResponse.getBody()).isNotNull();
@@ -96,7 +98,7 @@ public class ProductControllerTest {
 
         var response = restClient.get().uri(baseUrl)
                 .retrieve()
-                .toEntity(ProductResponseDto[].class);
+                .toEntity(ProductItemDto[].class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
@@ -125,7 +127,7 @@ public class ProductControllerTest {
                 .uri(baseUrl + "/" + createResponse.getBody().id())
                 .body(updateRequestDto)
                 .retrieve()
-                .toEntity(ProductResponseDto.class);
+                .toEntity(ProductItemDto.class);
 
         assertThat(updateResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(updateResponse.getBody()).isNotNull();
@@ -151,7 +153,7 @@ public class ProductControllerTest {
                 () -> restClient.get()
                         .uri(baseUrl + "/" + createResponse.getBody().id())
                         .retrieve()
-                        .toEntity(ProductResponseDto.class)
+                        .toEntity(ProductItemDto.class)
         );
     }
 }

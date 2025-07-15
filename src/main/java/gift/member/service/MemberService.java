@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 public class MemberService {
 
     private final MemberRepository memberRepository;
@@ -57,9 +58,13 @@ public class MemberService {
     public AccessTokenRefreshResponseDto refreshAccessToken(
             AccessTokenRefreshRequestDto requestDto) {
         UUID memberUuid = tokenProvider.getMemberUuidFromRefreshToken(requestDto.refreshToken());
-        Member member = memberRepository.findByUuid(memberUuid)
-                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 회원입니다."));
 
-        return new AccessTokenRefreshResponseDto(tokenProvider.generateAccessToken(member));
+        return new AccessTokenRefreshResponseDto(tokenProvider.generateAccessToken(findByUuid(memberUuid)));
+    }
+
+
+    public Member findByUuid(UUID uuid) throws EntityNotFoundException {
+        return memberRepository.findByUuid(uuid)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 회원입니다."));
     }
 }

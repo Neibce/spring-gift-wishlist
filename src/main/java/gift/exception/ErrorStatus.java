@@ -2,7 +2,7 @@ package gift.exception;
 
 public enum ErrorStatus {
     INTERNAL_SERVER_ERROR(-1, "Internal Server Error"),
-    NOT_FOUND(2, "Entity Not Found"),
+    ENTITY_NOT_FOUND(2, "Entity Not Found"),
     ENTITY_ALREADY_EXISTS(3, "Entity Already Exists"),
     MD_APPROVAL_REQUIRED(4, "MD Approval Required"),
     VALIDATION_ERROR(-2, "Validation error"),
